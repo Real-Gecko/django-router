@@ -1,10 +1,55 @@
 # Django Router
 
-Maintaining Django's `urls.py` can become really annoying when you have a lot of 'em(dozens in single file). Other frameworks deal with the problem in more elegant ways, like Flask's `@app.route` decorator. This project brings same concept to Django by adding `@router` decorator functions. No more need to deal with lengthy `urls.py`.
+You have a data and you need to provide some CRUD functionality for it quickly. What do you do?
 
-# What you get
+1. Create model
+2. Add some views
+3. ????
+4. PROFIT!
 
-Just use decorator in your app's `views.py`. Django Router uses **autodiscovery** feature, so make sure views you're interested in are either inside `views.py` or get imported into it.
+Right? Right! Done! And nothing works! Why? `URLS.PY`!!! You always forget this ones? I have a solution!
+
+Maintaining Django's `urls.py` can become really annoying when you have a lot of apps with dozens urls in each. Other frameworks deal with it in elegant ways, like Flask's `@app.route` decorator. This project brings same concept to Django by adding `@router` decorator functions.
+
+# Installation
+
+Package is hosted in `pypi.org` thus you can use any tool that works with it to install the package:
+
+`pip install django-router`
+
+`poetry add django-router`
+
+Add `django_router` to your `INSTALLED_APPS`
+
+```python
+# superduperproject/settings.py
+INSTALLED_APPS = [
+    ...
+    "django_router",
+    ...
+]
+```
+
+---
+
+Modify project `urls.py` (the top one)
+
+```python
+# superduperproject/urls.py
+from django_router import router
+
+# the only time you need to modify any `urls.py`
+urlpatterns = router.urlpatterns
+
+# or with existing ones
+urlpatterns = [
+    ...
+] + router.urlpatterns
+```
+
+# Usage
+
+Just use decorator in your apps' `views.py`. Django Router uses **autodiscovery** feature, so make sure views you're interested in are either inside `views.py` or get imported into it.
 
 ```python
 # employees/views.py
@@ -28,11 +73,21 @@ def EmployeeCreate(CreateView):
 
 ```
 
-And that's it!
+And that's it! No more need to deal with lengthy `urls.py`!
 
 # How it works
 
 Router has two functions `path` and `re_path` which work exactly the same as `django.urls` functions you already know. Except that you don't even need to specify **url** or **name**.
+
+View module path is used to determine the resulting URL prefix. So URL for views in `employees/views.py` app will start with `/employees/...` , `employees/manage/views.py` - `/employees/manage/...` URL etc.
+
+Also first module will be used as a namespace for reverse
+
+```python
+reverse('employees:employee_list')
+```
+
+**NOTICE**: nested namespaces are not supported for now.
 
 If no name is provided function name will be used, camel case will be turned into snake case:
 
