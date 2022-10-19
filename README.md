@@ -89,7 +89,9 @@ reverse('employees:employee_list')
 
 **NOTICE**: nested namespaces are not supported for now.
 
-If no name is provided function name will be used, camel case will be turned into snake case:
+App has some functionality builtin for automatic `pattern` and `name` generation.
+
+For FBVs if no name is provided function name will be used, camel case will be turned into snake case:
 
 ```python
 # same as path('import_employees/', import_employees, name='import_employees')
@@ -101,6 +103,18 @@ def import_employees(request):
 @router.path()
 class ImportEmployees(View):
     ...
+```
+
+For generic Django views(`CreateView`,`UpdateView`,`ListView`,`DetailView`,`DeleteView`) there's some builtin autonaming behavior which tries to be logical.
+
+```python
+@route.path()
+class NewEmployeeView(CreateView):
+    model = Employee
+
+# is same as
+path('employee_create/', NewEmployeeView.as_view(), name='employee_create')
+
 ```
 
 Of course you can specify path and name as usual:
@@ -118,9 +132,10 @@ These are default settings for the project
 
 ```python
 ROUTER_SETTINGS={
-    "NAME_WORDS_SEPARATOR": "_"
-    "TRY_USE_MODEL_NAMES": True
-    "MODEL_NAMES_MONOLITHIC": True
+    "NAME_WORDS_SEPARATOR": "_",
+    "TRY_USE_MODEL_NAMES": True,
+    "MODEL_NAMES_MONOLITHIC": True,
+    "DJANGO_ADMIN_LIKE_NAMES": False,
 }
 ```
 
@@ -174,9 +189,25 @@ class EmployeeAddressList(ListView):
 
 `path('employeeaddress/', EmployeesAddressList.as_view(), name='employeeaddress_list')`
 
-`MODEL_NAMES_MONOLITHIC` = False
+`MODEL_NAMES_MONOLITHIC = False`
 
 `path('employee_address/', EmployeesAddressList.as_view(), name='employee_address_list')`
+
+---
+
+**`DJANGO_ADMIN_LIKE_NAMES`**: if true uses strings like in Django admin for view names and paths
+
+-   `ListView: changelist`
+-   `UpdateView: change`
+-   `CreateView: add`
+
+```python
+@router.path()
+class EmployeeCreate(CreateView):
+    model = Employee
+```
+
+`path('employee/add/', EmployeeCreate.as_view(), name='employee_add')`
 
 # Management commands
 

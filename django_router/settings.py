@@ -8,6 +8,7 @@ class RouterSettings:
     NAME_WORDS_SEPARATOR: str = "_"
     TRY_USE_MODEL_NAMES: bool = True
     MODEL_NAMES_MONOLITHIC: bool = True
+    DJANGO_ADMIN_LIKE_NAMES: bool = False
 
 
 def get_settings():

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django-router"
-version = "1.0.1"
+version = "1.0.2"
 description = "Use simple decorators on views instead of maintaining lengthy urls.py"
 authors = ["Real-Gecko <alexandrbezenkov@gmail.com>"]
 license = "BSD-3-Clause"
@@ -14,3 +14,6 @@ python = "^3.7"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.isort]
+float_to_top = true
