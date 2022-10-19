@@ -9,7 +9,7 @@ packages = [{ include = "django_router" }]
 homepage = "https://github.com/Real-Gecko/django-router"
 
 [tool.poetry.dependencies]
-python = "^3.4"
+python = "^3.7"
 
 [build-system]
 requires = ["poetry-core"]
