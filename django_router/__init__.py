@@ -67,7 +67,7 @@ class Router:
                         name = settings.NAME_WORDS_SEPARATOR.join(
                             [model_name, parameter_map[0]]
                         )
-                        if not pattern:
+                        if pattern is None:
                             to_join = [model_name]
                             if issubclass(view, SingleObjectMixin) and not issubclass(
                                 view, CreateView
@@ -77,7 +77,7 @@ class Router:
                             pattern = "/".join(to_join)
                     else:
                         name = from_camel(view.__name__)
-                if not pattern:
+                if pattern is None:
                     pattern = name + "/"
 
                 pattern = "/".join(view.__module__.split(".")[1:-1] + [pattern])
