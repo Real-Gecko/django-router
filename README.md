@@ -178,6 +178,8 @@ class EmployeeAddressList(ListView):
 
 `path('employee_address/', EmployeesAddressList.as_view(), name='employee_address_list')`
 
-# Management command
+# Management commands
 
-You can run `python manage.py routerlist` to see list of all available routes created by the router.
+`python manage.py router_list` - to see list of all available routes created by the router.
+
+`python manage.py router_urls` - to see list of all available routes as if they're in `urls.py`
