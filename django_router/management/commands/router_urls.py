@@ -23,7 +23,7 @@ class Command(BaseCommand):
                 )
                 self.stdout.write(
                     self.style.SUCCESS(
-                        f'\t{_route}, {subpattern.lookup_str}, name="{subpattern.name})"'
+                        f'\t{_route}, {subpattern.lookup_str}, name="{subpattern.name}")'
                     )
                 )
             self.stdout.write(self.style.SUCCESS(f"]\n"))
