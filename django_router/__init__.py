@@ -10,10 +10,6 @@ from django_router.utils import DJANGO_ADMIN_LIKE_MAP, DJANGO_ROUTER_MAP, from_c
 class Router:
     def __init__(self):
         self._namespaces = dict()
-        if settings.DJANGO_ADMIN_LIKE_NAMES:
-            self._parameter_map = DJANGO_ADMIN_LIKE_MAP
-        else:
-            self._parameter_map = DJANGO_ROUTER_MAP
 
     def path(self, pattern=None, name=None, **kwargs):
         def _wrapper(view):
@@ -37,6 +33,10 @@ class Router:
 
     @property
     def urlpatterns(self):
+        if settings.ADMIN_LIKE_VERBS:
+            parameter_map = DJANGO_ADMIN_LIKE_MAP
+        else:
+            parameter_map = DJANGO_ROUTER_MAP
         urlpatterns = []
         for namespace, patterns in self._namespaces.items():
             paths = []
@@ -49,7 +49,7 @@ class Router:
                     else:
                         model_name = from_camel(model._meta.object_name)
                 if not name:
-                    parameter_map = (
+                    parameters = (
                         from_camel(view.__name__),
                         from_camel(view.__name__) + "/",
                     )
@@ -58,14 +58,15 @@ class Router:
                         and isinstance(view, type)
                         and settings.TRY_USE_MODEL_NAMES
                         and issubclass(model, Model)
+                        and not settings.SIMPLE_AUTO_NAMING
                     ):
-                        for key in self._parameter_map:
+                        for key in parameter_map:
                             if issubclass(view, key):
-                                parameter_map = self._parameter_map[key]
+                                parameters = parameter_map[key]
                                 continue
 
-                        name = settings.NAME_WORDS_SEPARATOR.join(
-                            [model_name, parameter_map[0]]
+                        name = settings.WORDS_SEPARATOR.join(
+                            [model_name, parameters[0]]
                         )
                         if pattern is None:
                             to_join = [model_name]
@@ -73,7 +74,7 @@ class Router:
                                 view, CreateView
                             ):
                                 to_join.append("<int:pk>")
-                            to_join.append(parameter_map[1])
+                            to_join.append(parameters[1])
                             pattern = "/".join(to_join)
                     else:
                         name = from_camel(view.__name__)

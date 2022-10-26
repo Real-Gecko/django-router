@@ -113,7 +113,7 @@ class NewEmployeeView(CreateView):
     model = Employee
 
 # is same as
-path('employee_create/', NewEmployeeView.as_view(), name='employee_create')
+path('employee/create/', NewEmployeeView.as_view(), name='employee_create')
 
 ```
 
@@ -131,8 +131,9 @@ Settings for the project are mostly to control autonaming behavior.
 These are default settings for the project
 
 ```python
-ROUTER_SETTINGS={
-    "NAME_WORDS_SEPARATOR": "_",
+ROUTER_SETTINGS = {
+    "SIMPLE_AUTO_NAMING": False,
+    "WORDS_SEPARATOR": "_",
     "TRY_USE_MODEL_NAMES": True,
     "MODEL_NAMES_MONOLITHIC": True,
     "DJANGO_ADMIN_LIKE_NAMES": False,
@@ -141,7 +142,16 @@ ROUTER_SETTINGS={
 
 ---
 
-**`NAME_WORDS_SEPARATOR`**: a separator char that'll be used during camel to snake case conversion in view names:
+**`SIMPLE_AUTO_NAMING`**: if set to true all other settings are ignored, name and url are composed from view name, `CamelCase` turned to `snake_case`:
+
+```
+"test_app.views.SimpleCbv" -> ["/test_app/simple_cbv/", "test_app:simple_cbv"],
+"test_app.views.simple_fbv" -> ["/test_app/simple_fbv/", "test_app:simple_fbv"],
+```
+
+---
+
+**`WORDS_SEPARATOR`**: a separator char that'll be used during camel to snake case conversion in view names:
 
 ```python
 @router.path()
@@ -149,11 +159,11 @@ class EmployeeList(ListView):
     model = Employee
 ```
 
-`NAME_WORDS_SEPARATOR = "_"`
+`WORDS_SEPARATOR = "_"`
 
 `path('employee_list/', EmployeeList.as_view(), name=`**_`'employee_list'`_**`)`
 
-`NAME_WORDS_SEPARATOR = "-"`
+`WORDS_SEPARATOR = "-"`
 
 `path('employee_list/', EmployeeList.as_view(), name=`**_`'employee-list'`_**`)`
 
@@ -163,17 +173,17 @@ class EmployeeList(ListView):
 
 ```python
 @router.path()
-class Employees(ListView):
+class DoSomething(SomeBaseView):
     model = Employee
 ```
 
 `TRY_USE_MODEL_NAMES = True`
 
-`path('employee_list/', Employees.as_view(), name='employee_list')`
+`path('employee/do_something/', DoSomething.as_view(), name='employee_do_something')`
 
 `TRY_USE_MODEL_NAMES = False`
 
-`path('employees/', Employees.as_view(), name='employees')`
+`path('do_something/', DoSomething.as_view(), name='do_something')`
 
 ---
 

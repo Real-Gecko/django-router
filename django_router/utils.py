@@ -7,7 +7,9 @@ from django_router.settings import ROUTER_SETTINGS
 CAMEL_PATTERN = re.compile(r"(?<!^)(?=[A-Z])")
 
 
-def from_camel(string: str, separator=ROUTER_SETTINGS.NAME_WORDS_SEPARATOR):
+def from_camel(string: str, separator=None):
+    if separator is None:
+        separator = ROUTER_SETTINGS.WORDS_SEPARATOR
     return CAMEL_PATTERN.sub(separator, string).lower()
 
 
