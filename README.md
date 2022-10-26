@@ -11,6 +11,10 @@ Right? Right! Done! And nothing works! Why? `URLS.PY`!!! You always forget this 
 
 Maintaining Django's `urls.py` can become really annoying when you have a lot of apps with dozens urls in each. Other frameworks deal with it in elegant ways, like Flask's `@app.route` decorator. This project brings same concept to Django by adding `@router` decorator functions.
 
+# Compatibility
+
+This project is automatically tested with Python 3.7, 3.8, 3.9, 3.10 and Django 2.2, 3.1, 3.2, 4.0, 4.1. Latest version for each release. Compatibility with earlier versions of Python or Django(starting from 2.0) is possible, but not guaranteed.
+
 # Installation
 
 Package is hosted in `pypi.org` thus you can use any tool that works with it to install the package:
