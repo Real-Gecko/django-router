@@ -2,11 +2,12 @@ import os
 from pathlib import Path
 
 import django
+from django.core.management.utils import get_random_secret_key
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-SECRET_KEY = "django-insecure-)l*sbwgq@jxgp9id^od*!ps9vq5^y+5p_z!$9bi59=g&&5m#ry"
+SECRET_KEY = get_random_secret_key()
 
 DEBUG = True
 
