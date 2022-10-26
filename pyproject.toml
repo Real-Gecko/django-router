@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django-router"
-version = "1.0.3"
+version = "1.0.4"
 description = "Use simple decorators on views instead of maintaining lengthy urls.py"
 authors = ["Real-Gecko <alexandrbezenkov@gmail.com>"]
 license = "BSD-3-Clause"
@@ -9,12 +9,13 @@ packages = [{ include = "django_router" }]
 homepage = "https://github.com/Real-Gecko/django-router"
 
 [tool.poetry.dependencies]
-python = ">=3.4"
+python = ">=3.6"
 
 [tool.poetry.group.test.dependencies]
-django = ">=2.0"
-django-extensions = "*"
+django = ">=2.2"
+django-extensions = ">=3.1"
 coverage = "*"
+tox = "*"
 
 [build-system]
 requires = ["poetry-core"]
