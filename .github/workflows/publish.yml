@@ -1,22 +1,26 @@
 name: Publish to PyPi
 
 on:
-    push:
-        tags:
-            - "*"
+  push:
+    branches:
+      - master
+  workflow_run:
+    workflows: ["Run Tests"]
+    types:
+      - completed
 jobs:
-    build-n-publish:
-        name: Build and publish
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v3
-            - name: Set up Python 3.10
-              uses: actions/setup-python@v4
-              with:
-                  python-version: "3.10"
-            - name: Install poetry
-              run: pip install poetry
-            - name: publish
-              run: |
-                  poetry config pypi-token.pypi ${{ secrets.PYPI_API_TOKEN }}
-                  poetry publish --build
+  build-n-publish:
+    name: Build and publish
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+      - name: Install poetry
+        run: pip install poetry
+      - name: publish
+        run: |
+          poetry config pypi-token.pypi ${{ secrets.PYPI_API_TOKEN }}
+          poetry publish --build --skip-existing
