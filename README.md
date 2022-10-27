@@ -51,6 +51,10 @@ urlpatterns = [
 ] + router.urlpatterns
 ```
 
+# Concept
+
+To easily understand all the auto naming concept of the app take a look at testing project within the repo.
+
 # Usage
 
 Just use decorator in your apps' `views.py`. Django Router uses **autodiscovery** feature, so make sure views you're interested in are either inside `views.py` or get imported into it.
@@ -138,7 +142,6 @@ These are default settings for the project
 ROUTER_SETTINGS = {
     "SIMPLE_AUTO_NAMING": False,
     "WORDS_SEPARATOR": "_",
-    "TRY_USE_MODEL_NAMES": True,
     "MODEL_NAMES_MONOLITHIC": True,
     "DJANGO_ADMIN_LIKE_NAMES": False,
 }
@@ -173,25 +176,7 @@ class EmployeeList(ListView):
 
 ---
 
-**`TRY_USE_MODEL_NAMES`**: try to use model name for view naming within CBV while forming URLs
-
-```python
-@router.path()
-class DoSomething(SomeBaseView):
-    model = Employee
-```
-
-`TRY_USE_MODEL_NAMES = True`
-
-`path('employee/do_something/', DoSomething.as_view(), name='employee_do_something')`
-
-`TRY_USE_MODEL_NAMES = False`
-
-`path('do_something/', DoSomething.as_view(), name='do_something')`
-
----
-
-`MODEL_NAMES_MONOLITHIC`: only works when `TRY_USE_MODEL_NAMES = True`, control whether separator is used for model names consisting of multiple words
+`MODEL_NAMES_MONOLITHIC`: only works when `MODEL_BASED_PATTERNS = True`, control whether separator is used for model names consisting of multiple words
 
 ```python
 @router.path()

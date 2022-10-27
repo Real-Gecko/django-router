@@ -31,6 +31,47 @@ class Router:
             (func, pattern, view, name, kwargs)
         )
 
+    def _get_params(self, view, parameter_map):
+        pattern_parts = view.__module__.split(".")[1:-1]
+        name_parts = []
+        if settings.SIMPLE_AUTO_NAMING or not isinstance(view, type):
+            pattern_parts.append(from_camel(view.__name__))
+            name_parts.append(from_camel(view.__name__))
+        else:
+            model = getattr(view, "model", None)
+            model_name = ""
+            object_name = model._meta.object_name if model else ""
+            if model:
+                if settings.MODEL_NAMES_MONOLITHIC:
+                    model_name = model._meta.model_name
+                else:
+                    model_name = from_camel(model._meta.object_name)
+
+                pattern_parts.append(model_name)
+                name_parts.append(model_name)
+
+            if issubclass(view, SingleObjectMixin) and not issubclass(view, CreateView):
+                pattern_parts.append("<int:pk>")
+
+            parameters = (
+                from_camel(view.__name__.replace(object_name, "")),
+                from_camel(view.__name__.replace(object_name, "")),
+            )
+            for key in parameter_map:
+                if issubclass(view, key):
+                    parameters = parameter_map[key]
+                    break
+
+            if parameters[1]:
+                pattern_parts.append(parameters[1])
+
+            name_parts.append(parameters[0].replace(model_name, ""))
+
+        pattern = "/".join(pattern_parts) + "/"
+        name = settings.WORDS_SEPARATOR.join(name_parts)
+
+        return pattern, name
+
     @property
     def urlpatterns(self):
         if settings.ADMIN_LIKE_VERBS:
@@ -41,56 +82,19 @@ class Router:
         for namespace, patterns in self._namespaces.items():
             paths = []
             for (func, pattern, view, name, kwargs) in patterns:
-                model = getattr(view, "model", None)
-                model_name = ""
-                if model:
-                    if settings.MODEL_NAMES_MONOLITHIC:
-                        model_name = model._meta.model_name
-                    else:
-                        model_name = from_camel(model._meta.object_name)
+                _pattern, _name = self._get_params(view, parameter_map)
                 if not name:
-                    parameters = (
-                        from_camel(view.__name__),
-                        from_camel(view.__name__) + "/",
-                    )
-                    if (
-                        model_name
-                        and isinstance(view, type)
-                        and settings.TRY_USE_MODEL_NAMES
-                        and issubclass(model, Model)
-                        and not settings.SIMPLE_AUTO_NAMING
-                    ):
-                        for key in parameter_map:
-                            if issubclass(view, key):
-                                parameters = parameter_map[key]
-                                continue
-
-                        name = settings.WORDS_SEPARATOR.join(
-                            [model_name, parameters[0]]
-                        )
-                        if pattern is None:
-                            to_join = [model_name]
-                            if issubclass(view, SingleObjectMixin) and not issubclass(
-                                view, CreateView
-                            ):
-                                to_join.append("<int:pk>")
-                            to_join.append(parameters[1])
-                            pattern = "/".join(to_join)
-                    else:
-                        name = from_camel(view.__name__)
+                    name = _name
                 if pattern is None:
-                    pattern = name + "/"
-
-                pattern = "/".join(view.__module__.split(".")[1:-1] + [pattern])
-
-                if isinstance(view, type):
-                    view = view.as_view()
-                else:
-                    view = view
-
-                kwargs.update(name=name)
-
-                paths.append(func(pattern, view, **kwargs))
+                    pattern = _pattern
+                paths.append(
+                    func(
+                        pattern,
+                        view.as_view() if isinstance(view, type) else view,
+                        name=name,
+                        kwargs=kwargs,
+                    )
+                )
 
             urlpatterns.append(path(f"{namespace}/", (paths, namespace, namespace)))
 

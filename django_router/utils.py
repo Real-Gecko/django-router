@@ -15,16 +15,16 @@ def from_camel(string: str, separator=None):
 
 DJANGO_ROUTER_MAP = {
     generic.ListView: ("list", ""),
-    generic.CreateView: ("create", "create/"),
+    generic.CreateView: ("create", "create"),
     generic.DetailView: ("detail", ""),
-    generic.UpdateView: ("update", "update/"),
-    generic.DeleteView: ("delete", "delete/"),
+    generic.UpdateView: ("update", "update"),
+    generic.DeleteView: ("delete", "delete"),
 }
 
 DJANGO_ADMIN_LIKE_MAP = {
     generic.ListView: ("changelist", ""),
-    generic.CreateView: ("add", "add/"),
-    generic.DetailView: ("detail", ""),
-    generic.UpdateView: ("change", "change/"),
-    generic.DeleteView: ("delete", "delete/"),
+    generic.CreateView: ("add", "add"),
+    generic.DetailView: ("view", ""),
+    generic.UpdateView: ("change", "change"),
+    generic.DeleteView: ("delete", "delete"),
 }

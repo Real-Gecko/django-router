@@ -44,6 +44,11 @@ class DoSomething(generic.View):
     model = models.ModelName
 
 
+@router.path()
+class ModelNameDoAnything(generic.View):
+    model = models.ModelName
+
+
 @router.re_path(r"^index/$")
 def index(request):
     pass

@@ -39,32 +39,33 @@ class DjangoRouterTestCaseMixin:
 
 class DefaultTestCase(DjangoRouterTestCaseMixin, TestCase):
     test_matrix = {
-        "test_app.views.ListSome": [
-            "/test_app/modelname/",
-            "test_app:modelname_list",
+        "test_app.views.simple_fbv": ["/test_app/simple_fbv/", "test_app:simple_fbv"],
+        "test_app.views.SimpleCbv": ["/test_app/simple_cbv/", "test_app:simple_cbv"],
+        "test_app.views.ListSome": ["/test_app/modelname/", "test_app:modelname_list"],
+        "test_app.views.CreateSome": [
+            "/test_app/modelname/create/",
+            "test_app:modelname_create",
         ],
         "test_app.views.JustADetailView": [
             "/test_app/modelname/<int:pk>/",
             "test_app:modelname_detail",
         ],
-        "test_app.views.RemoveIt": [
-            "/test_app/modelname/<int:pk>/delete/",
-            "test_app:modelname_delete",
-        ],
         "test_app.views.LetsUpdate": [
             "/test_app/modelname/<int:pk>/update/",
             "test_app:modelname_update",
         ],
-        "test_app.views.CreateSome": [
-            "/test_app/modelname/create/",
-            "test_app:modelname_create",
+        "test_app.views.RemoveIt": [
+            "/test_app/modelname/<int:pk>/delete/",
+            "test_app:modelname_delete",
         ],
         "test_app.views.DoSomething": [
             "/test_app/modelname/do_something/",
             "test_app:modelname_do_something",
         ],
-        "test_app.views.SimpleCbv": ["/test_app/simple_cbv/", "test_app:simple_cbv"],
-        "test_app.views.simple_fbv": ["/test_app/simple_fbv/", "test_app:simple_fbv"],
+        "test_app.views.ModelNameDoAnything": [
+            "/test_app/modelname/do_anything/",
+            "test_app:modelname_do_anything",
+        ],
         "test_app.views.index": ["/test_app/index/", "test_app:index"],
     }
 
@@ -72,20 +73,24 @@ class DefaultTestCase(DjangoRouterTestCaseMixin, TestCase):
 @override_settings(ROUTER_SETTINGS={"SIMPLE_AUTO_NAMING": True})
 class SimpleNamingTestCase(DjangoRouterTestCaseMixin, TestCase):
     test_matrix = {
+        "test_app.views.simple_fbv": ["/test_app/simple_fbv/", "test_app:simple_fbv"],
+        "test_app.views.SimpleCbv": ["/test_app/simple_cbv/", "test_app:simple_cbv"],
+        "test_app.views.ListSome": ["/test_app/list_some/", "test_app:list_some"],
         "test_app.views.CreateSome": ["/test_app/create_some/", "test_app:create_some"],
-        "test_app.views.DoSomething": [
-            "/test_app/do_something/",
-            "test_app:do_something",
-        ],
         "test_app.views.JustADetailView": [
             "/test_app/just_a_detail_view/",
             "test_app:just_a_detail_view",
         ],
         "test_app.views.LetsUpdate": ["/test_app/lets_update/", "test_app:lets_update"],
-        "test_app.views.ListSome": ["/test_app/list_some/", "test_app:list_some"],
         "test_app.views.RemoveIt": ["/test_app/remove_it/", "test_app:remove_it"],
-        "test_app.views.SimpleCbv": ["/test_app/simple_cbv/", "test_app:simple_cbv"],
-        "test_app.views.simple_fbv": ["/test_app/simple_fbv/", "test_app:simple_fbv"],
+        "test_app.views.DoSomething": [
+            "/test_app/do_something/",
+            "test_app:do_something",
+        ],
+        "test_app.views.ModelNameDoAnything": [
+            "/test_app/model_name_do_anything/",
+            "test_app:model_name_do_anything",
+        ],
         "test_app.views.index": ["/test_app/index/", "test_app:index"],
     }
 
@@ -93,52 +98,32 @@ class SimpleNamingTestCase(DjangoRouterTestCaseMixin, TestCase):
 @override_settings(ROUTER_SETTINGS={"WORDS_SEPARATOR": "-"})
 class WordsSeparatorTestCase(DjangoRouterTestCaseMixin, TestCase):
     test_matrix = {
-        "test_app.views.ListSome": [
-            "/test_app/modelname/",
-            "test_app:modelname-list",
+        "test_app.views.simple_fbv": ["/test_app/simple_fbv/", "test_app:simple_fbv"],
+        "test_app.views.SimpleCbv": ["/test_app/simple-cbv/", "test_app:simple-cbv"],
+        "test_app.views.ListSome": ["/test_app/modelname/", "test_app:modelname-list"],
+        "test_app.views.CreateSome": [
+            "/test_app/modelname/create/",
+            "test_app:modelname-create",
         ],
         "test_app.views.JustADetailView": [
             "/test_app/modelname/<int:pk>/",
             "test_app:modelname-detail",
         ],
-        "test_app.views.RemoveIt": [
-            "/test_app/modelname/<int:pk>/delete/",
-            "test_app:modelname-delete",
-        ],
         "test_app.views.LetsUpdate": [
             "/test_app/modelname/<int:pk>/update/",
             "test_app:modelname-update",
         ],
-        "test_app.views.CreateSome": [
-            "/test_app/modelname/create/",
-            "test_app:modelname-create",
+        "test_app.views.RemoveIt": [
+            "/test_app/modelname/<int:pk>/delete/",
+            "test_app:modelname-delete",
         ],
         "test_app.views.DoSomething": [
             "/test_app/modelname/do-something/",
             "test_app:modelname-do-something",
         ],
-        "test_app.views.SimpleCbv": ["/test_app/simple-cbv/", "test_app:simple-cbv"],
-        "test_app.views.simple_fbv": ["/test_app/simple_fbv/", "test_app:simple_fbv"],
-        "test_app.views.index": ["/test_app/index/", "test_app:index"],
-    }
-
-
-@override_settings(ROUTER_SETTINGS={"TRY_USE_MODEL_NAMES": False})
-class UseModelNamesTestCase(DjangoRouterTestCaseMixin, TestCase):
-    test_matrix = {
-        "test_app.views.CreateSome": ["/test_app/create_some/", "test_app:create_some"],
-        "test_app.views.JustADetailView": [
-            "/test_app/just_a_detail_view/",
-            "test_app:just_a_detail_view",
-        ],
-        "test_app.views.LetsUpdate": ["/test_app/lets_update/", "test_app:lets_update"],
-        "test_app.views.ListSome": ["/test_app/list_some/", "test_app:list_some"],
-        "test_app.views.RemoveIt": ["/test_app/remove_it/", "test_app:remove_it"],
-        "test_app.views.SimpleCbv": ["/test_app/simple_cbv/", "test_app:simple_cbv"],
-        "test_app.views.simple_fbv": ["/test_app/simple_fbv/", "test_app:simple_fbv"],
-        "test_app.views.DoSomething": [
-            "/test_app/do_something/",
-            "test_app:do_something",
+        "test_app.views.ModelNameDoAnything": [
+            "/test_app/modelname/do-anything/",
+            "test_app:modelname-do-anything",
         ],
         "test_app.views.index": ["/test_app/index/", "test_app:index"],
     }
@@ -147,32 +132,36 @@ class UseModelNamesTestCase(DjangoRouterTestCaseMixin, TestCase):
 @override_settings(ROUTER_SETTINGS={"MODEL_NAMES_MONOLITHIC": False})
 class ModelNamesMonolithicTestCase(DjangoRouterTestCaseMixin, TestCase):
     test_matrix = {
+        "test_app.views.simple_fbv": ["/test_app/simple_fbv/", "test_app:simple_fbv"],
+        "test_app.views.SimpleCbv": ["/test_app/simple_cbv/", "test_app:simple_cbv"],
         "test_app.views.ListSome": [
             "/test_app/model_name/",
             "test_app:model_name_list",
-        ],
-        "test_app.views.JustADetailView": [
-            "/test_app/model_name/<int:pk>/",
-            "test_app:model_name_detail",
-        ],
-        "test_app.views.RemoveIt": [
-            "/test_app/model_name/<int:pk>/delete/",
-            "test_app:model_name_delete",
-        ],
-        "test_app.views.LetsUpdate": [
-            "/test_app/model_name/<int:pk>/update/",
-            "test_app:model_name_update",
         ],
         "test_app.views.CreateSome": [
             "/test_app/model_name/create/",
             "test_app:model_name_create",
         ],
+        "test_app.views.JustADetailView": [
+            "/test_app/model_name/<int:pk>/",
+            "test_app:model_name_detail",
+        ],
+        "test_app.views.LetsUpdate": [
+            "/test_app/model_name/<int:pk>/update/",
+            "test_app:model_name_update",
+        ],
+        "test_app.views.RemoveIt": [
+            "/test_app/model_name/<int:pk>/delete/",
+            "test_app:model_name_delete",
+        ],
         "test_app.views.DoSomething": [
             "/test_app/model_name/do_something/",
             "test_app:model_name_do_something",
         ],
-        "test_app.views.SimpleCbv": ["/test_app/simple_cbv/", "test_app:simple_cbv"],
-        "test_app.views.simple_fbv": ["/test_app/simple_fbv/", "test_app:simple_fbv"],
+        "test_app.views.ModelNameDoAnything": [
+            "/test_app/model_name/do_anything/",
+            "test_app:model_name_do_anything",
+        ],
         "test_app.views.index": ["/test_app/index/", "test_app:index"],
     }
 
@@ -180,13 +169,19 @@ class ModelNamesMonolithicTestCase(DjangoRouterTestCaseMixin, TestCase):
 @override_settings(ROUTER_SETTINGS={"ADMIN_LIKE_VERBS": True})
 class DjangoAdminLikeTestCase(DjangoRouterTestCaseMixin, TestCase):
     test_matrix = {
+        "test_app.views.simple_fbv": ["/test_app/simple_fbv/", "test_app:simple_fbv"],
+        "test_app.views.SimpleCbv": ["/test_app/simple_cbv/", "test_app:simple_cbv"],
         "test_app.views.ListSome": [
             "/test_app/modelname/",
             "test_app:modelname_changelist",
         ],
+        "test_app.views.CreateSome": [
+            "/test_app/modelname/add/",
+            "test_app:modelname_add",
+        ],
         "test_app.views.JustADetailView": [
             "/test_app/modelname/<int:pk>/",
-            "test_app:modelname_detail",
+            "test_app:modelname_view",
         ],
         "test_app.views.LetsUpdate": [
             "/test_app/modelname/<int:pk>/change/",
@@ -196,16 +191,14 @@ class DjangoAdminLikeTestCase(DjangoRouterTestCaseMixin, TestCase):
             "/test_app/modelname/<int:pk>/delete/",
             "test_app:modelname_delete",
         ],
-        "test_app.views.CreateSome": [
-            "/test_app/modelname/add/",
-            "test_app:modelname_add",
-        ],
         "test_app.views.DoSomething": [
             "/test_app/modelname/do_something/",
             "test_app:modelname_do_something",
         ],
-        "test_app.views.SimpleCbv": ["/test_app/simple_cbv/", "test_app:simple_cbv"],
-        "test_app.views.simple_fbv": ["/test_app/simple_fbv/", "test_app:simple_fbv"],
+        "test_app.views.ModelNameDoAnything": [
+            "/test_app/modelname/do_anything/",
+            "test_app:modelname_do_anything",
+        ],
         "test_app.views.index": ["/test_app/index/", "test_app:index"],
     }
 
@@ -218,32 +211,36 @@ class DjangoAdminLikeTestCase(DjangoRouterTestCaseMixin, TestCase):
 )
 class SeparatorAndNamesTestCase(DjangoRouterTestCaseMixin, TestCase):
     test_matrix = {
+        "test_app.views.simple_fbv": ["/test_app/simple_fbv/", "test_app:simple_fbv"],
+        "test_app.views.SimpleCbv": ["/test_app/simple-cbv/", "test_app:simple-cbv"],
         "test_app.views.ListSome": [
             "/test_app/model-name/",
             "test_app:model-name-list",
-        ],
-        "test_app.views.JustADetailView": [
-            "/test_app/model-name/<int:pk>/",
-            "test_app:model-name-detail",
-        ],
-        "test_app.views.RemoveIt": [
-            "/test_app/model-name/<int:pk>/delete/",
-            "test_app:model-name-delete",
-        ],
-        "test_app.views.LetsUpdate": [
-            "/test_app/model-name/<int:pk>/update/",
-            "test_app:model-name-update",
         ],
         "test_app.views.CreateSome": [
             "/test_app/model-name/create/",
             "test_app:model-name-create",
         ],
+        "test_app.views.JustADetailView": [
+            "/test_app/model-name/<int:pk>/",
+            "test_app:model-name-detail",
+        ],
+        "test_app.views.LetsUpdate": [
+            "/test_app/model-name/<int:pk>/update/",
+            "test_app:model-name-update",
+        ],
+        "test_app.views.RemoveIt": [
+            "/test_app/model-name/<int:pk>/delete/",
+            "test_app:model-name-delete",
+        ],
         "test_app.views.DoSomething": [
             "/test_app/model-name/do-something/",
             "test_app:model-name-do-something",
         ],
-        "test_app.views.SimpleCbv": ["/test_app/simple-cbv/", "test_app:simple-cbv"],
-        "test_app.views.simple_fbv": ["/test_app/simple_fbv/", "test_app:simple_fbv"],
+        "test_app.views.ModelNameDoAnything": [
+            "/test_app/model-name/do-anything/",
+            "test_app:model-name-do-anything",
+        ],
         "test_app.views.index": ["/test_app/index/", "test_app:index"],
     }
 
