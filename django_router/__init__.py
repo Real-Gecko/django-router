@@ -32,7 +32,7 @@ class Router:
         )
 
     def _get_params(self, view, parameter_map):
-        pattern_parts = view.__module__.split(".")[1:-1]
+        pattern_parts = []
         name_parts = []
         if settings.SIMPLE_AUTO_NAMING or not isinstance(view, type):
             pattern_parts.append(from_camel(view.__name__))
@@ -87,6 +87,7 @@ class Router:
                     name = _name
                 if pattern is None:
                     pattern = _pattern
+                pattern = "/".join(view.__module__.split(".")[1:-1] + [pattern])
                 paths.append(
                     func(
                         pattern,

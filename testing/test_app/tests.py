@@ -67,6 +67,11 @@ class DefaultTestCase(DjangoRouterTestCaseMixin, TestCase):
             "test_app:modelname_do_anything",
         ],
         "test_app.views.index": ["/test_app/index/", "test_app:index"],
+        "test_app.views.IndexView": ["/test_app/", "test_app:index_view"],
+        "test_app.submod.views.SubIndexView": [
+            "/test_app/submod/",
+            "test_app:sub_index_view",
+        ],
     }
 
 

@@ -1,6 +1,9 @@
 from django.views import generic
 from test_app import models
 
+# Test subapp
+from test_app.submod import views  # NOQA
+
 from django_router import router
 
 
@@ -51,4 +54,9 @@ class ModelNameDoAnything(generic.View):
 
 @router.re_path(r"^index/$")
 def index(request):
+    pass
+
+
+@router.path("")
+class IndexView(generic.View):
     pass

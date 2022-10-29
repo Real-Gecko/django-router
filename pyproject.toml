@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django-router"
-version = "1.0.5"
+version = "1.0.6"
 description = "Use simple decorators on views instead of maintaining lengthy urls.py"
 authors = ["Real-Gecko <alexandrbezenkov@gmail.com>"]
 license = "BSD-3-Clause"
