@@ -1,25 +1,17 @@
-[tool.poetry]
+[project]
 name = "django-router"
-version = "1.0.6"
+version = "1.0.7"
 description = "Use simple decorators on views instead of maintaining lengthy urls.py"
-authors = ["Real-Gecko <alexandrbezenkov@gmail.com>"]
-license = "BSD-3-Clause"
+authors = [{ name = "RealGecko", email = "alexandrbezenkov@gmail.com" }]
+dependencies = []
+requires-python = ">=3.6"
 readme = "README.md"
-packages = [{ include = "django_router" }]
-homepage = "https://github.com/Real-Gecko/django-router"
-
-[tool.poetry.dependencies]
-python = ">=3.6"
-
-[tool.poetry.group.test.dependencies]
-django = ">=2.2"
-django-extensions = ">=3.1"
-coverage = "*"
-tox = "*"
+license = { text = "BSD-3-Clause" }
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
 
-[tool.isort]
-float_to_top = true
+[tool.pdm.dev-dependencies]
+dev = []
+test = ["django>=2.2", "django-extensions>=3.1", "tox", "coverage>=7.3.1"]

@@ -2,6 +2,7 @@
 *.pyc
 dist
 publish
-poetry.lock
 .tox
 .coverage
+pdm.lock
+.pdm-python
