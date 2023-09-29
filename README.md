@@ -144,6 +144,7 @@ ROUTER_SETTINGS = {
     "WORDS_SEPARATOR": "_",
     "MODEL_NAMES_MONOLITHIC": True,
     "DJANGO_ADMIN_LIKE_NAMES": False,
+    "MODULE_PATH_MAP": False
 }
 ```
 
@@ -207,6 +208,22 @@ class EmployeeCreate(CreateView):
 ```
 
 `path('employee/add/', EmployeeCreate.as_view(), name='employee_add')`
+
+---
+
+**`MODULE_PATH_MAP`**: By default router uses view module path to generate resulting url:
+`students.views.StudentUpdate` is split into three parts:
+- `students`: top level app name, will be used as a prefix for all views inside `student.views`
+- `views`: name of the module containing views, skipped during path name generation
+- `StudentList`: view name, turned into a last part of the url depending on previous settings
+So resulting url for the view may look like this
+`/students/<int:pk>/update/`
+
+However you may have a view that has following module path:
+`companies.departments.views.DepartmentUpdate`, by default resulting url will look like this:
+`/companies/departments/<int:pk>/update/`
+If you want to avoid this and skip everything between app name and last module name set this settings to `False`.
+
 
 # Management commands
 

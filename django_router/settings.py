@@ -7,6 +7,7 @@ class RouterSettings:
     WORDS_SEPARATOR: str = "_"
     MODEL_NAMES_MONOLITHIC: bool = True
     ADMIN_LIKE_VERBS: bool = False
+    MODULE_PATH_MAP: bool = True
 
     def __init__(self):
         project_settings = getattr(settings, "ROUTER_SETTINGS", {})

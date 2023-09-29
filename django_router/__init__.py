@@ -1,4 +1,3 @@
-from django.db.models import Model
 from django.urls import path, re_path
 from django.views.generic import CreateView
 from django.views.generic.detail import SingleObjectMixin
@@ -81,13 +80,17 @@ class Router:
         urlpatterns = []
         for namespace, patterns in self._namespaces.items():
             paths = []
-            for (func, pattern, view, name, kwargs) in patterns:
+            for func, pattern, view, name, kwargs in patterns:
                 _pattern, _name = self._get_params(view, parameter_map)
                 if not name:
                     name = _name
                 if pattern is None:
                     pattern = _pattern
-                pattern = "/".join(view.__module__.split(".")[1:-1] + [pattern])
+                if settings.MODULE_PATH_MAP:
+                    path_map = view.__module__.split(".")[1:-1]
+                else:
+                    path_map = []
+                pattern = "/".join(path_map + [pattern])
                 paths.append(
                     func(
                         pattern,
