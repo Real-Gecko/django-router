@@ -1,10 +1,10 @@
 [project]
 name = "django-router"
-version = "1.0.7"
+version = "1.0.8"
 description = "Use simple decorators on views instead of maintaining lengthy urls.py"
 authors = [{ name = "RealGecko", email = "alexandrbezenkov@gmail.com" }]
 dependencies = []
-requires-python = ">=3.6"
+requires-python = ">=3.7"
 readme = "README.md"
 license = { text = "BSD-3-Clause" }
 
@@ -14,4 +14,4 @@ build-backend = "pdm.backend"
 
 [tool.pdm.dev-dependencies]
 dev = []
-test = ["django>=2.2", "django-extensions>=3.1", "tox", "coverage>=7.3.1"]
+test = ["django>=2.2", "django-extensions>=3.1", "tox", "coverage>=7.2.7"]

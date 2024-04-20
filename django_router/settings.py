@@ -13,11 +13,13 @@ class RouterSettings:
         project_settings = getattr(settings, "ROUTER_SETTINGS", {})
         if "NAME_WORDS_SEPARATOR" in project_settings:  # pragma: no cover
             raise ImproperlyConfigured(
-                "Option NAME_WORDS_SEPARATOR for Django Router renamed to WORDS_SEPARATOR"
+                "Option NAME_WORDS_SEPARATOR for Django Router"
+                " renamed to WORDS_SEPARATOR"
             )
         if "DJANGO_ADMIN_LIKE_NAMES" in project_settings:  # pragma: no cover
             raise ImproperlyConfigured(
-                "Option DJANGO_ADMIN_LIKE_NAMES for Django Router renamed to ADMIN_LIKE_VERBS"
+                "Option DJANGO_ADMIN_LIKE_NAMES for Django Router"
+                " renamed to ADMIN_LIKE_VERBS"
             )
         if "TRY_USE_MODEL_NAMES" in project_settings:  # pragma: no cover
             raise ImproperlyConfigured(

@@ -23,7 +23,7 @@ INSTALLED_APPS = [
     "test_app",
 ]
 
-if django.VERSION[:2] < (3, 2):  # backward compat compat
+if django.VERSION[:2] < (3, 2):  # backward compat
     INSTALLED_APPS.append("django_router.apps.DjangoRouterConfig")
 else:
     INSTALLED_APPS.append("django_router")

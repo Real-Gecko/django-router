@@ -33,9 +33,6 @@ class DjangoRouterTestCaseMixin:
         for view in self.test_matrix:
             self.assertEqual(self.test_matrix[view], urls[view])
 
-        # print(f"--- {self.__class__.__name__} ---")
-        # print(urls)
-
 
 class DefaultTestCase(DjangoRouterTestCaseMixin, TestCase):
     test_matrix = {
