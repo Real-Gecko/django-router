@@ -1,14 +1,12 @@
 name: Publish to PyPi
 
 on:
-  workflow_run:
-    workflows: ["Run Tests"]
-    branches: master
-    types: completed
+  push:
+    tags:
+      - "**"
 jobs:
   build-n-publish:
     name: Build and publish
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     permissions:
       id-token: write
