@@ -1,8 +1,5 @@
-.vscode
 *.pyc
-dist
 publish
-.tox
-.coverage
-pdm.lock
-.pdm-python
+.*
+uv.lock
+*.egg-info

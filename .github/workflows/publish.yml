@@ -1,4 +1,4 @@
-name: Publish to PyPi
+name: Publish to PyPI
 
 on:
   push:
@@ -11,7 +11,7 @@ jobs:
     permissions:
       id-token: write
     steps:
-      - uses: actions/checkout@v3
-      - uses: pdm-project/setup-pdm@v3
-      - name: publish
-        run: pdm publish
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v2
+      - name: Publish
+        run: uv build && uv publish
