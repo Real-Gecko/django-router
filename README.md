@@ -13,7 +13,7 @@ Maintaining Django's `urls.py` can become really annoying when you have a lot of
 
 # Compatibility
 
-This project is automatically tested with Python 3.7, 3.8, 3.9, 3.10 and Django 2.2, 3.1, 3.2, 4.0, 4.1. Latest version for each release. Compatibility with earlier versions of Python or Django(starting from 2.0) is possible, but not guaranteed.
+This project is automatically tested with Python 3.8, 3.9, 3.10, 3.11, 3.12 and Django 3.2, 4.0, 4.1, 4.2, 5.0, 5.1. Latest version for each release. Compatibility with earlier versions of Python or Django(starting from 2.0) is possible, but not guaranteed.
 
 # Installation
 
